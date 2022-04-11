@@ -10,7 +10,7 @@ import (
 
 var rootCmd = &coral.Command{
 	Use:     "skeleton",
-	Short:   "Skeleton is a simple, skeleton of a go app",
+	Short:   "Skeleton App, a bare bones Go cli app",
 	Version: "0.0.1",
 	Args:    coral.MaximumNArgs(1),
 	Run: func(cmd *coral.Command, args []string) {

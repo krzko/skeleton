@@ -1,5 +1,0 @@
-{
-    "yaml.schemas": {
-        "https://json.schemastore.org/github-action.json": "file:///Users/kowalskk/go/src/github.com/krzko/skeleton/.workflows/build.yml"
-    }
-}
