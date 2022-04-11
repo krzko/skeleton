@@ -1,2 +1,3 @@
 # skeleton
-💀 Skeleton App, a bare bones CLI app
+
+💀 Skeleton App, a bare bones Go cli app
