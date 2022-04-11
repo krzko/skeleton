@@ -11,7 +11,7 @@ import (
 var rootCmd = &coral.Command{
 	Use:     "skeleton",
 	Short:   "Skeleton App, a bare bones Go cli app",
-	Version: "0.0.1",
+	Version: "0.0.2",
 	Args:    coral.MaximumNArgs(1),
 	Run: func(cmd *coral.Command, args []string) {
 		startDir := cmd.Flags().Lookup("start-dir")
