@@ -1,46 +1,93 @@
-project_name: "skeleton"
-
+env:
+  - GO111MODULE=on
+  - CGO_ENABLED=0
 before:
   hooks:
     - go mod tidy
-    - go mod download
-
 builds:
-  - main: ./main.go
+  -
     binary: skeleton
-    env:
-      - CGO_ENABLED=0
+    ldflags: -s -w -X main.Version={{ .Version }} -X main.CommitSHA={{ .Commit }}
     goos:
       - linux
-      - darwin
-      - windows
       - freebsd
       - openbsd
-      - netbsd
+      - darwin
+      - windows
     goarch:
       - amd64
       - arm64
-      - "386"
+      - 386
       - arm
     goarm:
-      - "7"
-    ignore:
-      - goos: windows
-        goarch: arm64
-      - goos: windows
-        goarm: "7"
+      - 6
+      - 7
 
 archives:
-  - format_overrides:
+  -
+    builds:
+      - skeleton
+    format_overrides:
       - goos: windows
         format: zip
+    replacements:
+      windows: Windows
+      darwin: Darwin
+      386: i386
+      amd64: x86_64
 
 nfpms:
-  - maintainer: Kristof Kowalski <k@ko.wal.ski>
-    description: Skeleton App, a bare bones Go cli app
-    homepage: https://github.com/krzko/skeleton
+  -
+    vendor: kowalski
+    homepage: "https://ko.wal.ski/"
+    maintainer: "Kristof Kowalski <k@ko.wal.ski>"
+    description: "Skeleton App, a bare bones Go cli app"
     license: MIT
     formats:
+      - apk
       - deb
       - rpm
-      - apk
+    bindir: /usr/bin
+
+brews:
+  - goarm: 6
+    tap:
+      owner: kowalski
+      name: homebrew-tap
+    commit_author:
+      name: "Kristof Kowalski"
+      email: "k@ko.wal.ski"
+    homepage: "https://ko.wal.ski/"
+    description: "Skeleton App, a bare bones Go cli app"
+    # skip_upload: true
+
+# snapcrafts:
+#   -
+#     name: skeleton
+#     publish: true
+#     summary: Skeleton App, a bare bones Go cli app
+#     description: |
+#       Skeleton App, a bare bones Go cli app.
+
+#     grade: stable
+#     confinement: strict
+#     license: MIT
+#     base: core20
+
+#     apps:
+#       skeleton:
+#         plugs: ["home", "network"]
+
+signs:
+  - artifacts: checksum
+
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
