@@ -1,0 +1,46 @@
+project_name: "skeleton"
+
+before:
+  hooks:
+    - go mod tidy
+    - go mod download
+
+builds:
+  - main: ./main.go
+    binary: skeleton
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+      - freebsd
+      - openbsd
+      - netbsd
+    goarch:
+      - amd64
+      - arm64
+      - "386"
+      - arm
+    goarm:
+      - "7"
+    ignore:
+      - goos: windows
+        goarch: arm64
+      - goos: windows
+        goarm: "7"
+
+archives:
+  - format_overrides:
+      - goos: windows
+        format: zip
+
+nfpms:
+  - maintainer: Kristof Kowalski <k@ko.wal.ski>
+    description: Skeleton App, a bare bones Go cli app
+    homepage: https://github.com/krzko/skeleton
+    license: MIT
+    formats:
+      - deb
+      - rpm
+      - apk
