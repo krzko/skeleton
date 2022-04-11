@@ -1,0 +1,26 @@
+name: skeleton
+adopt-info: skeleton
+summary: Skeleton App, a bare bones Go cli app
+description: |
+  Skeleton App, a bare bones Go cli app.
+grade: stable
+confinement: strict
+base: core20
+
+parts:
+  skeleton:
+    source: .
+    plugin: go
+    build-packages:
+      - git
+    override-pull: |
+      snapcraftctl pull
+      snapcraftctl set-version $(git describe --abbrev=0 --tags)
+
+apps:
+  skeleton:
+    command: bin/skeleton
+    plugs:
+      - network
+      - network-bind
+      - home
